@@ -1,0 +1,42 @@
+# === DATASETS ===
+# Ignore common dataset file types and folders
+datasets/
+datasets/**/*.bin
+datasets/**/*.tgz
+datasets/**/*.tar.gz
+datasets/**/*.zip
+
+
+# Ignore any tarball or zip in the datasets folder
+datasets/**/*.tar
+datasets/**/*.gz
+
+# === MODELS ===
+# Ignore all PyTorch model checkpoint files
+models/**/*.pt
+*.pt  # also in root
+
+# === WANDB ===
+# Ignore all Weights & Biases run logs
+wandb/
+
+# === macOS ===
+.DS_Store
+
+# === VSCode settings ===
+.vscode/
+
+# === Python cache ===
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# === logs ===
+logs/
+
+# === Openssl 1.1.1 ===
+openssl-1.1.1w/
+
+
+
