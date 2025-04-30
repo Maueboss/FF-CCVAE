@@ -1,21 +1,23 @@
-# Reimplementation of the Forward-Forward Algorithm
+# Forward-Forward Conditional Convolutional Variational AutoEncoder
 
-Our Paper: [https://arxiv.org/abs/2307.04205](https://arxiv.org/abs/2307.04205)
+My implementation revolves around the idea of generating images with an architecture trained using a forward-forward algorithm, rather than backpropagation. The idea is quite straightforward, use a modified version of the VAE, known as Conditional VAE using CNNs. The conditioning is done for the labels, this allows not only reconstruction of images and generation from the latent space, as it usually happens for the standard VAE. It also allows for conditional generation for a given class from the latent space.
 
-This is a reimplementation of Geoffrey Hinton's Forward-Forward Algorithm in Python/Pytorch. Majority of the code in the folder ```official_python_implementation``` is taken from [here](https://github.com/loeweX/Forward-Forward).
+The transition from BP to FFA is achieved thanks to the introduction of a modified version of the ELBO loss that gets computed locally for each decoder layer with respect its encoder simmetric layer:
 
-&rarr; [Original Paper](https://arxiv.org/abs/2212.13345)
+![ELBO equation](https://latex.codecogs.com/svg.image?\dpi{120}\mathcal{L}_{t}'(\boldsymbol{\theta},%20\boldsymbol{\phi};%20\mathbf{x}'^{(i)}_{t})%20\simeq%20\frac{1}{2}%20\sum_{j=1}^{J}%20\left(%201%20+%20\log((\sigma_j^{(i)})^2)%20-%20(\mu_j^{(i)})^2%20-%20(\sigma_j^{(i)})^2%20\right)%20+%20\frac{1}{L}%20\sum_{l=1}^{L}%20\log%20p_{\boldsymbol{\theta}}(\mathbf{x}'^{(i)}_{t}%20|%20\mathbf{z}^{(i,l)}))
 
+while CwC loss is computed layer by layer for the encoder:
 
-This code covers the experiments described in section 3.3 ("A simple supervised example of FF") of the paper and 
-achieves roughly the same performance as the official Matlab implementation (see Results section).
+![Loss Equation](https://latex.codecogs.com/svg.image?\dpi{120}\mathcal{L}_{t}=L_{CwC}%20=%20-\frac{1}{N}%20\sum_{n=1}^{N}%20\log\left(\frac{\exp(g_n^+)}{\sum_{j=1}^{J}%20\exp(G_{n,j})}\right))
 
-In addition to a re-implementation of section 3.3 ("A simple supervised example of FF") of the paper, we have extended the forward-forward algorithm to a sentiment analysis task. We have also performed explorations with thresholds and different activation functions. Our findings have been summarized here: [Report](https://drive.google.com/file/d/15m5rq16Z0IG8nOqyxyRreH0Fk7oeO7kN/view?usp=share_link) and [Video](https://www.youtube.com/watch?v=hl6uD0mXMAw&t=1s&ab_channel=JonahKornberg)
+The reason why this work is important is basically it being the first architecture trained using FFA for generating images using a VAE. 
+
+<img width="280" alt="Picture 1" src="https://github.com/user-attachments/assets/dd4210af-dd48-4ca7-9db4-a937dee44dec" />
 
 ## How to Use
 
 - Install required dependencies from requirements.txt
-- update config.py with the required parameters for choosing a dataset (MNIST/CIFAR10/Sentiment) and model architecture
+- update config.py with the required parameters for choosing a dataset
 - From the official_python_implementation folder, run the following command:
 ```bash
 python main.py
