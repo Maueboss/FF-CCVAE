@@ -18,7 +18,7 @@ This work is significant as it presents the first architecture that applies FFA 
 
 - Install required dependencies from requirements.txt
 - update config.py with the required parameters for choosing a dataset
-- From the official_python_implementation folder, run the following command:
+- From the main folder, run the following command:
 ```bash
 python main.py
 ```
